@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MixedComponentsExampleViewController.swift
 //  LoadingPlaceholderViewDemo
 //
 //  Created by Mario on 28/04/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MixedComponentsExampleViewController: UIViewController {
     
     @IBOutlet private weak var avatarImageView: UIImageView! {
         didSet {
@@ -20,10 +20,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLoadingPlaceholderView()
+        loadingPlaceholderView.startLoading(animated: false)
+    }
+    
+    private func setupLoadingPlaceholderView() {
         loadingPlaceholderView.configuration.gradientColor = .white
         loadingPlaceholderView.configuration.backgroundColor = .white
         loadingPlaceholderView.cover(view)
-        loadingPlaceholderView.startLoading(animated: true)
     }
     
     @IBAction private func showLoaderButtonTapped() {

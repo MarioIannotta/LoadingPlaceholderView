@@ -31,6 +31,7 @@ class LoadingPlaceholderView: UIView {
         guard !isLoading, let viewToCover = viewToCover else { return }
         viewToCover.addSubview(self)
         translatesAutoresizingMaskIntoConstraints = false
+        frame = viewToCover.bounds
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: viewToCover.topAnchor),
             bottomAnchor.constraint(equalTo: viewToCover.bottomAnchor),
@@ -77,17 +78,11 @@ class LoadingPlaceholderView: UIView {
     
     private func setupMaskLayerIfNeeded() {
         guard let superview = superview else { return }
-
         maskLayer.frame = superview.bounds
         let toalBezierPath = superview
-            .extractCoverableSubviews()
-            .reduce(UIBezierPath(), { totalBezierPath, view in
-                let relativePath = view.coverablePath
-                // since coverablePath is expressed in the view's coordinate system
-                // we need to convert the path in the superview coordinate system
-                let offsetPoint = view.convert(view.bounds, to: superview).origin
-                relativePath.translate(to: offsetPoint)
-                totalBezierPath.append(relativePath)
+            .coverableSubviews()
+            .reduce(UIBezierPath(), { totalBezierPath, coverableView in
+                coverableView.addCoverablePath(to: totalBezierPath, superview: superview)
                 return totalBezierPath
             })
         maskLayer.path = toalBezierPath.cgPath
@@ -143,12 +138,11 @@ class LoadingPlaceholderView: UIView {
     
     private func performFadeInAnimation() {
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-        opacityAnimation.fromValue = 0
+        opacityAnimation.fromValue = alpha
         opacityAnimation.toValue = 1
         opacityAnimation.duration = configuration.fadeAnimationDuration
         gradientLayer.add(opacityAnimation, forKey: "opacityAnimationIn")
         
-        self.alpha = 0
         UIView.animate(withDuration: configuration.fadeAnimationDuration) {
             self.alpha = 1
         }
@@ -156,12 +150,11 @@ class LoadingPlaceholderView: UIView {
     
     private func performFadeOutAnimation() {
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-        opacityAnimation.fromValue = 1
+        opacityAnimation.fromValue = alpha
         opacityAnimation.toValue = 0
         opacityAnimation.duration = configuration.fadeAnimationDuration
         gradientLayer.add(opacityAnimation, forKey: "opacityAnimationOut")
         
-        self.alpha = 1
         UIView.animate(withDuration: configuration.fadeAnimationDuration) {
             self.alpha = 0
         }
@@ -171,29 +164,6 @@ class LoadingPlaceholderView: UIView {
         gradientLayer.removeAllAnimations()
         gradientLayer.removeFromSuperlayer()
         maskLayer.removeFromSuperlayer()
-    }
-    
-}
-
-extension UIView {
-    
-    fileprivate func extractCoverableSubviews() -> [UIView] {
-        var foundedViews = [UIView]()
-        subviews.forEach {
-            foundedViews += $0.extractCoverableSubviews()
-            if $0.isCoverable {
-                foundedViews.append($0)
-            }
-        }
-        return foundedViews
-    }
-    
-}
-
-extension UIBezierPath {
-    
-    func translate(to point: CGPoint) {
-        apply(CGAffineTransform(translationX: point.x, y: point.y))
     }
     
 }
