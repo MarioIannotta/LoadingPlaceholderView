@@ -321,11 +321,11 @@ dsfiosdofijs</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="hDl-6V-7bI" firstAttribute="leading" secondItem="UAr-VX-GJq" secondAttribute="leadingMargin" constant="5" id="HVi-xC-Yoe"/>
+                                                <constraint firstItem="hDl-6V-7bI" firstAttribute="leading" secondItem="UAr-VX-GJq" secondAttribute="leading" constant="20" id="HVi-xC-Yoe"/>
                                                 <constraint firstAttribute="trailing" secondItem="3k8-Wv-1bb" secondAttribute="trailing" constant="20" id="LE6-6x-tZ2"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="hDl-6V-7bI" secondAttribute="bottom" constant="4" id="RCZ-mz-rIm"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="hDl-6V-7bI" secondAttribute="bottom" constant="4" id="RCZ-mz-rIm"/>
                                                 <constraint firstItem="3k8-Wv-1bb" firstAttribute="leading" secondItem="hDl-6V-7bI" secondAttribute="trailing" constant="20" id="YDY-2x-HAf"/>
-                                                <constraint firstItem="hDl-6V-7bI" firstAttribute="top" secondItem="UAr-VX-GJq" secondAttribute="topMargin" constant="4" id="wf2-WZ-Q5A"/>
+                                                <constraint firstItem="hDl-6V-7bI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="UAr-VX-GJq" secondAttribute="topMargin" constant="4" id="wf2-WZ-Q5A"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
@@ -366,7 +366,7 @@ dsfiosdofijs</string>
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="TEU-6C-mj0" secondAttribute="bottom" constant="20" id="M85-bL-LpJ"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="TEU-6C-mj0" secondAttribute="bottom" constant="10" id="M85-bL-LpJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="OVq-LT-nW2" secondAttribute="trailing" constant="20" id="RQg-oj-Rch"/>
                                                 <constraint firstAttribute="trailing" secondItem="TEU-6C-mj0" secondAttribute="trailing" constant="20" id="Zmj-S6-gb9"/>
                                                 <constraint firstItem="TEU-6C-mj0" firstAttribute="leading" secondItem="iLf-8f-CHg" secondAttribute="leading" constant="20" id="e9V-DC-kOA"/>

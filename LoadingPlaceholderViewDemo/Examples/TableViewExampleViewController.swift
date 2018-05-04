@@ -12,20 +12,20 @@ class TableViewExampleViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private var numberOfSections = 2
-    private var numberOfRows = 5
+    private var numberOfSections = 0
+    private var numberOfRows = 0
     private var loadingPlaceholderView = LoadingPlaceholderView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLoadingPlaceholderView()
-//        performFakeNetworkRequest()
+        performFakeNetworkRequest()
     }
     
     private func performFakeNetworkRequest() {
         // simulate network request
         loadingPlaceholderView.startLoading(animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.finishFakeRequest()
         }
     }

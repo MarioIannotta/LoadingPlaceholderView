@@ -89,26 +89,30 @@ extension UITableViewCell: CoverableView {
 extension UITableView: CoverableView {
     
     var coverablePath: UIBezierPath {
-        let coverablePath = UIBezierPath()
-        var currentHeight: CGFloat = 0
-        let numberOfSection = 2//dataSource?.numberOfSections?(in: self) ?? 0
-        for section in 0..<numberOfSection {
-            let numberOfRows = 5//dataSource?.tableView(self, numberOfRowsInSection: section) ?? 0
-            for row in 0..<numberOfRows {
-                guard
-                    let cell = dataSource?.tableView(self, cellForRowAt: IndexPath(row: row, section: section))
-                    else { continue }
-                cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: cell.frame.size.height)
-                guard
-                    let cellCoverablePath = cell.makeCoverablePath(superview: cell)
-                    else { continue }
-                print(cell.frame)
-                cellCoverablePath.translate(to: CGPoint(x: 0, y: currentHeight))
-                coverablePath.append(cellCoverablePath)
-                currentHeight += cell.frame.height
+        let identifiers = [
+            "AvatarAndLabelCell",
+            "AvatarAndLabelCell",
+            "TextViewAndSegmentControllCell",
+            "TextViewAndSegmentControllCell",
+            "TextViewAndSegmentControllCell",
+            "TextViewAndSegmentControllCell",
+            "TextViewAndSegmentControllCell",
+            "TextViewAndSegmentControllCell",
+            "AvatarAndLabelCell",
+            "AvatarAndLabelCell"
+        ]
+        var index = 0
+        return identifiers.reduce(UIBezierPath(), { totalPath, identifier in
+            let indexPath = IndexPath(row: index, section: 0)
+            let cell = dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+            cell.frame = rectForRow(at: indexPath)
+            if let cellCoverablePath = cell.makeCoverablePath(superview: cell) {
+                cellCoverablePath.translate(to: CGPoint(x: 0, y: cell.frame.origin.y))
+                totalPath.append(cellCoverablePath)
             }
-        }
-        return coverablePath
+            index += 1
+            return totalPath
+        })
     }
     
 }
