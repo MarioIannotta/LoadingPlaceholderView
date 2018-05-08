@@ -144,7 +144,7 @@ class LoadingPlaceholderView: UIView {
         gradientLayer.add(opacityAnimation, forKey: "opacityAnimationIn")
         
         UIView.animate(withDuration: configuration.fadeAnimationDuration) {
-            self.alpha = 0.8
+            self.alpha = 1
         }
     }
     

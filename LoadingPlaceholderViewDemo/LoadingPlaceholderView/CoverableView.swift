@@ -14,7 +14,6 @@ import UIKit
     
 }
 
-
 extension CoverableView {
     
     func makeCoverablePath(superview: UIView? = nil) -> UIBezierPath? {

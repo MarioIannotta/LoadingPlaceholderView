@@ -10,11 +10,25 @@ import UIKit
 
 class TableViewExampleViewController: UIViewController {
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            tableView.coverableCellsIdentifiers = cellsIdentifiers
+        }
+    }
     
     private var numberOfSections = 0
     private var numberOfRows = 0
     private var loadingPlaceholderView = LoadingPlaceholderView()
+    
+    private var cellsIdentifiers = [
+        "AvatarAndLabelCell",
+        "TextViewAndSegmentControllCell",
+        "TextViewAndSegmentControllCell",
+        "AvatarAndLabelCell",
+        "AvatarAndLabelCell",
+        "TextViewAndSegmentControllCell",
+        "TextViewAndSegmentControllCell"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +46,7 @@ class TableViewExampleViewController: UIViewController {
     
     private func finishFakeRequest() {
         self.numberOfSections = 2
-        self.numberOfRows = 5
+        self.numberOfRows = cellsIdentifiers.count
         self.tableView.reloadData()
         self.loadingPlaceholderView.stopLoading(animated: true)
     }
@@ -64,12 +78,7 @@ extension TableViewExampleViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cellIdentifier = ""
-        if indexPath.item < 2 {
-            cellIdentifier = "AvatarAndLabelCell"
-        } else {
-            cellIdentifier = "TextViewAndSegmentControllCell"
-        }
+        let cellIdentifier = cellsIdentifiers[indexPath.row]
         return tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     }
     

@@ -88,19 +88,15 @@ extension UITableViewCell: CoverableView {
 
 extension UITableView: CoverableView {
     
+    private static let association = ObjectAssociation<NSObject>()
+    
+    var coverableCellsIdentifiers: [String]? {
+        get { return UITableView.association[self] as? [String] }
+        set { UITableView.association[self] = newValue as NSObject? }
+    }
+    
     var coverablePath: UIBezierPath {
-        let identifiers = [
-            "AvatarAndLabelCell",
-            "AvatarAndLabelCell",
-            "TextViewAndSegmentControllCell",
-            "TextViewAndSegmentControllCell",
-            "TextViewAndSegmentControllCell",
-            "TextViewAndSegmentControllCell",
-            "TextViewAndSegmentControllCell",
-            "TextViewAndSegmentControllCell",
-            "AvatarAndLabelCell",
-            "AvatarAndLabelCell"
-        ]
+        let identifiers = coverableCellsIdentifiers ?? []
         var index = 0
         return identifiers.reduce(UIBezierPath(), { totalPath, identifier in
             let indexPath = IndexPath(row: index, section: 0)
@@ -113,6 +109,25 @@ extension UITableView: CoverableView {
             index += 1
             return totalPath
         })
+    }
+    
+}
+
+// from https://stackoverflow.com/questions/25426780/how-to-have-stored-properties-in-swift-the-same-way-i-had-on-objective-c
+private class ObjectAssociation<T: AnyObject> {
+    
+    private let policy: objc_AssociationPolicy
+    
+    /// - Parameter policy: An association policy that will be used when linking objects.
+    public init(policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
+        self.policy = policy
+    }
+    
+    /// Accesses associated object.
+    /// - Parameter index: An object whose associated object is to be accessed.
+    public subscript(index: AnyObject) -> T? {
+        get { return objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T? }
+        set { objc_setAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque(), newValue, policy) }
     }
     
 }
