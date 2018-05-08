@@ -21,21 +21,20 @@ class MixedComponentsExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLoadingPlaceholderView()
-        loadingPlaceholderView.startLoading(animated: false)
+        loadingPlaceholderView.cover(view, animated: false)
     }
     
     private func setupLoadingPlaceholderView() {
-        loadingPlaceholderView.configuration.gradientColor = .white
-        loadingPlaceholderView.configuration.backgroundColor = .white
-        loadingPlaceholderView.cover(view)
+        loadingPlaceholderView.gradientColor = .white
+        loadingPlaceholderView.backgroundColor = .white
     }
     
     @IBAction private func showLoaderButtonTapped() {
-        loadingPlaceholderView.startLoading(animated: true)
+        loadingPlaceholderView.cover(view)
     }
     
     @IBAction private func hideLoaderButtonTapped() {
-        loadingPlaceholderView.stopLoading(animated: true)
+        loadingPlaceholderView.uncover()
     }
     
     @IBAction private func aButtonTapped() {

@@ -14,11 +14,14 @@ import UIKit
     
 }
 
-
 extension CoverableView {
     
     func makeCoverablePath(superview: UIView? = nil) -> UIBezierPath? {
-        guard let view = self as? UIView, let superview = superview ?? view.superview else { return nil }
+        guard
+            let view = self as? UIView,
+            let superview = superview ?? view.superview
+            else { return nil }
+        view.layoutIfNeeded()
         let offsetPoint = view.convert(view.bounds, to: superview).origin
         let relativePath = coverablePath
         relativePath.translate(to: offsetPoint)

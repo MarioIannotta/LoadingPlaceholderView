@@ -17,7 +17,6 @@
 		AC9A003A2094F32B003E6375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC9A00392094F32B003E6375 /* Assets.xcassets */; };
 		AC9A00482094F34D003E6375 /* LoadingPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */; };
 		AC9A00492094F34D003E6375 /* CoverableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00462094F34D003E6375 /* CoverableView.swift */; };
-		AC9A004A2094F34D003E6375 /* LoadingPlaceholderView+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00472094F34D003E6375 /* LoadingPlaceholderView+Configuration.swift */; };
 		ACAC80AB209CBF2D0042ADAB /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAC80AA209CBF2D0042ADAB /* UIView+.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +33,6 @@
 		AC9A003E2094F32B003E6375 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingPlaceholderView.swift; sourceTree = "<group>"; };
 		AC9A00462094F34D003E6375 /* CoverableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverableView.swift; sourceTree = "<group>"; };
-		AC9A00472094F34D003E6375 /* LoadingPlaceholderView+Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoadingPlaceholderView+Configuration.swift"; sourceTree = "<group>"; };
 		ACAC80AA209CBF2D0042ADAB /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,7 +100,6 @@
 				AC9A00462094F34D003E6375 /* CoverableView.swift */,
 				AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */,
 				AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */,
-				AC9A00472094F34D003E6375 /* LoadingPlaceholderView+Configuration.swift */,
 				AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */,
 				ACAC80AA209CBF2D0042ADAB /* UIView+.swift */,
 			);
@@ -188,7 +185,6 @@
 				AC1F949A209C909B00F04A1C /* UIBezierPath+.swift in Sources */,
 				ACAC80AB209CBF2D0042ADAB /* UIView+.swift in Sources */,
 				AC9A00482094F34D003E6375 /* LoadingPlaceholderView.swift in Sources */,
-				AC9A004A2094F34D003E6375 /* LoadingPlaceholderView+Configuration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

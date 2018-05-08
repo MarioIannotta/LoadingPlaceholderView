@@ -10,11 +10,25 @@ import UIKit
 
 class TableViewExampleViewController: UIViewController {
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            tableView.coverableCellsIdentifiers = cellsIdentifiers
+        }
+    }
     
     private var numberOfSections = 0
     private var numberOfRows = 0
     private var loadingPlaceholderView = LoadingPlaceholderView()
+    
+    private var cellsIdentifiers = [
+        "AvatarAndLabelCell",
+        "TextViewAndSegmentControllCell",
+        "TextViewAndSegmentControllCell",
+        "AvatarAndLabelCell",
+        "AvatarAndLabelCell",
+        "TextViewAndSegmentControllCell",
+        "TextViewAndSegmentControllCell"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +38,7 @@ class TableViewExampleViewController: UIViewController {
     
     private func performFakeNetworkRequest() {
         // simulate network request
-        loadingPlaceholderView.startLoading(animated: true)
+        loadingPlaceholderView.cover(view)
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.finishFakeRequest()
         }
@@ -32,15 +46,14 @@ class TableViewExampleViewController: UIViewController {
     
     private func finishFakeRequest() {
         self.numberOfSections = 2
-        self.numberOfRows = 5
+        self.numberOfRows = cellsIdentifiers.count
         self.tableView.reloadData()
-        self.loadingPlaceholderView.stopLoading(animated: true)
+        self.loadingPlaceholderView.uncover()
     }
     
     private func setupLoadingPlaceholderView() {
-        loadingPlaceholderView.configuration.gradientColor = .white
-        loadingPlaceholderView.configuration.backgroundColor = .white
-        loadingPlaceholderView.cover(view)
+        loadingPlaceholderView.gradientColor = .white
+        loadingPlaceholderView.backgroundColor = .white
     }
     
     @IBAction private func showLoaderButtonTapped() {
@@ -64,12 +77,7 @@ extension TableViewExampleViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cellIdentifier = ""
-        if indexPath.item < 2 {
-            cellIdentifier = "AvatarAndLabelCell"
-        } else {
-            cellIdentifier = "TextViewAndSegmentControllCell"
-        }
+        let cellIdentifier = cellsIdentifiers[indexPath.row]
         return tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     }
     
