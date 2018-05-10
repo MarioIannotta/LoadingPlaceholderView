@@ -34,7 +34,6 @@ open class LoadingPlaceholderView: UIView {
     
     open var fadeAnimationDuration: TimeInterval = 0.15
     open var loadingAnimationDuration: TimeInterval = 1
-    open var defaultBorderRadius: CGFloat = 8
     open var gradientConfiguration = GradientConfiguration()
     open var gradientColor: UIColor = .clear {
         didSet {

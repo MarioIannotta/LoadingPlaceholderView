@@ -15,7 +15,7 @@ extension CoverableView where Self: UIView {
      for example UIScrollView' scroll indicators are UIImageViews
      */
     var isCoverable: Bool {
-        return bounds.width > 20 && bounds.height > 20
+        return bounds.width > 10 && bounds.height > 10
     }
     
 }
@@ -88,17 +88,33 @@ extension UITableViewCell: CoverableView {
 
 extension UITableView: CoverableView {
     
-    private static let association = ObjectAssociation<NSObject>()
+    private struct AssociatedObjectKey {
+        static var coverableCellsIdentifiers: String = "coverableCellsIdentifiers"
+    }
     
-    var coverableCellsIdentifiers: [String]? {
-        get { return UITableView.association[self] as? [String] }
-        set { UITableView.association[self] = newValue as NSObject? }
+    open var coverableCellsIdentifiers: [String]? {
+        get {
+            return objc_getAssociatedObject(self,
+                                              &AssociatedObjectKey.coverableCellsIdentifiers) as? [String]
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedObjectKey.coverableCellsIdentifiers,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
     
     var coverablePath: UIBezierPath {
-        let identifiers = coverableCellsIdentifiers ?? []
+        guard
+            let coverableCellsIdentifiers = coverableCellsIdentifiers
+            else { return makeCoverablePathFromVisibleCells() }
+        return makeCoverablePath(from: coverableCellsIdentifiers)
+    }
+    
+    private func makeCoverablePath(from coverableCellsIdentifiers: [String]) -> UIBezierPath {
         var height: CGFloat = 0
-        return identifiers.reduce(UIBezierPath(), { totalPath, identifier in
+        return coverableCellsIdentifiers.reduce(UIBezierPath(), { totalPath, identifier in
             guard
                 let cell = dequeueReusableCell(withIdentifier: identifier)
                 else { return totalPath }
@@ -112,23 +128,41 @@ extension UITableView: CoverableView {
         })
     }
     
-}
-
-// from https://stackoverflow.com/questions/25426780/how-to-have-stored-properties-in-swift-the-same-way-i-had-on-objective-c
-private class ObjectAssociation<T: AnyObject> {
-    
-    private let policy: objc_AssociationPolicy
-    
-    /// - Parameter policy: An association policy that will be used when linking objects.
-    public init(policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
-        self.policy = policy
+    private func makeCoverablePathFromVisibleCells() -> UIBezierPath {
+        return visibleCells.coverablePath
     }
     
-    /// Accesses associated object.
-    /// - Parameter index: An object whose associated object is to be accessed.
-    public subscript(index: AnyObject) -> T? {
-        get { return objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T? }
-        set { objc_setAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque(), newValue, policy) }
+}
+
+extension Array where Element: CoverableView {
+    
+    var coverablePath: UIBezierPath {
+        return reduce(UIBezierPath(), { totalPath, cell in
+            guard
+                let cellPath = cell.makeCoverablePath()
+                else { return totalPath }
+            totalPath.append(cellPath)
+            return totalPath
+        })
+    }
+    
+}
+
+extension UICollectionView: CoverableView {
+    
+    var coverablePath: UIBezierPath {
+        return visibleCells.coverablePath
+    }
+}
+
+extension UICollectionViewCell: CoverableView {
+    
+    var coverablePath: UIBezierPath {
+        return coverableSubviews()
+            .reduce(UIBezierPath(), { totalBezierPath, coverableView in
+                coverableView.addCoverablePath(to: totalBezierPath, superview: self)
+                return totalBezierPath
+            })
     }
     
 }

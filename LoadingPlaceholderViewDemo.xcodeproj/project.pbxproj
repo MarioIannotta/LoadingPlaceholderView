@@ -11,6 +11,7 @@
 		AC1F9496209C706300F04A1C /* TableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9495209C706300F04A1C /* TableViewExampleViewController.swift */; };
 		AC1F9498209C907000F04A1C /* CoverableView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */; };
 		AC1F949A209C909B00F04A1C /* UIBezierPath+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */; };
+		AC6738CF20A4A31E00458DE5 /* CollectionViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6738CE20A4A31E00458DE5 /* CollectionViewExampleViewController.swift */; };
 		AC9A00332094F32A003E6375 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00322094F32A003E6375 /* AppDelegate.swift */; };
 		AC9A00352094F32A003E6375 /* MixedComponentsExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00342094F32A003E6375 /* MixedComponentsExampleViewController.swift */; };
 		AC9A00382094F32A003E6375 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC9A00362094F32A003E6375 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		AC1F9495209C706300F04A1C /* TableViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExampleViewController.swift; sourceTree = "<group>"; };
 		AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoverableView+UIKit.swift"; sourceTree = "<group>"; };
 		AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+.swift"; sourceTree = "<group>"; };
+		AC6738CE20A4A31E00458DE5 /* CollectionViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewExampleViewController.swift; sourceTree = "<group>"; };
 		AC9A002F2094F32A003E6375 /* LoadingPlaceholderViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoadingPlaceholderViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9A00322094F32A003E6375 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC9A00342094F32A003E6375 /* MixedComponentsExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedComponentsExampleViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 		AC1F9490209C6ED900F04A1C /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				AC6738CE20A4A31E00458DE5 /* CollectionViewExampleViewController.swift */,
 				AC9A00342094F32A003E6375 /* MixedComponentsExampleViewController.swift */,
 				AC1F9495209C706300F04A1C /* TableViewExampleViewController.swift */,
 			);
@@ -185,6 +188,7 @@
 				AC1F949A209C909B00F04A1C /* UIBezierPath+.swift in Sources */,
 				ACAC80AB209CBF2D0042ADAB /* UIView+.swift in Sources */,
 				AC9A00482094F34D003E6375 /* LoadingPlaceholderView.swift in Sources */,
+				AC6738CF20A4A31E00458DE5 /* CollectionViewExampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
