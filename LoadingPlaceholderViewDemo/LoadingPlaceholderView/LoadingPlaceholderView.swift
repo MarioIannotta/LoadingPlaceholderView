@@ -14,30 +14,68 @@ open class LoadingPlaceholderView: UIView {
     
     public struct GradientConfiguration {
         
-        public var width: Double
-        public var backgroundColor: UIColor
-        public var primaryColor: UIColor
-        public var secondaryColor: UIColor
+        /**
+         The width of the primary color in the gradient
+         expressed as the percentage of the gradient size.
+        */
+        public var width: Double = 0.2
         
-        init() {
-            self.init(color: .white)
-        }
+        /**
+         The duration of the animation of the gradient.
+        */
+        public var animationDuration: TimeInterval = 1
         
-        public init(color: UIColor, width: Double = 0.2) {
+        /**
+         The backgroundColor of the gradient.
+        */
+        public var backgroundColor: UIColor = .clear
+        
+        /**
+         The primaryColor of the gradient.
+         */
+        public var primaryColor: UIColor = .clear
+        
+        /**
+         The secondaryColor of the gradient.
+         */
+        public var secondaryColor: UIColor = .clear
+        
+        fileprivate mutating func setMainColor(_ color: UIColor) {
             backgroundColor = color.withBrightness(brightness: 0.98)
             primaryColor = color.withBrightness(brightness: 0.95)
             secondaryColor = color.withBrightness(brightness: 0.88)
-            self.width = width
+        }
+        
+        init(mainColor: UIColor) {
+            setMainColor(mainColor)
         }
         
     }
     
+    /**
+     The duration of the animation performed by the methods
+     - `cover(_ viewToCover: UIView, animated: Bool = true)`
+     - `uncover(animated: Bool = true)`
+     
+     when animated is `true`
+    */
     open var fadeAnimationDuration: TimeInterval = 0.15
-    open var loadingAnimationDuration: TimeInterval = 1
-    open var gradientConfiguration = GradientConfiguration()
+    
+    /**
+     The main object to configure the gradient.
+    */
+    open var gradientConfiguration = GradientConfiguration(mainColor: .white)
+    
+    /**
+     The main color of the gradient.
+     
+     Once it has been set `gradientConfiguration.backgroundColor`,
+     `gradientConfiguration.primaryColor` and
+     `gradientConfiguration.secondaryColor` will be calculated based on this color.
+    */
     open var gradientColor: UIColor = .clear {
         didSet {
-            gradientConfiguration = GradientConfiguration(color: gradientColor)
+            gradientConfiguration.setMainColor(gradientColor)
         }
     }
     
@@ -49,6 +87,12 @@ open class LoadingPlaceholderView: UIView {
     private var viewToConverObservation: NSKeyValueObservation?
     private var isCovering: Bool { return superview != nil }
     
+    /**
+     Cover the given view with the current `LoadingPlaceholderView`
+     and starts the gradient animation.
+     - parameter viewToCover: The view that needs to be covered.
+     - parameter animated: If true, the view is being added to the viewToCover using an animation.
+    */
     public func cover(_ viewToCover: UIView, animated: Bool = true) {
         viewToCover.layoutIfNeeded()
         setupView(viewToCover: viewToCover)
@@ -58,6 +102,11 @@ open class LoadingPlaceholderView: UIView {
         }
     }
     
+    /**
+     Remove the current `LoadingPlaceholderView` from the superview
+     and stops the gradient animation.
+     - parameter animated: If true, the view is being removed from the viewToCover using an animation.
+     */
     public func uncover(animated: Bool = true) {
         guard isCovering else { return }
         fadeOut(animated: animated)
@@ -158,7 +207,7 @@ open class LoadingPlaceholderView: UIView {
         
         gradientAnimation.repeatCount = .infinity
         gradientAnimation.isRemovedOnCompletion = false
-        gradientAnimation.duration = loadingAnimationDuration
+        gradientAnimation.duration = gradientConfiguration.animationDuration
         gradientLayer.add(gradientAnimation, forKey: "locations")
     }
     
