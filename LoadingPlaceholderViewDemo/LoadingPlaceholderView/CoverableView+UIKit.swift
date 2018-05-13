@@ -8,14 +8,34 @@
 
 import UIKit
 
-extension CoverableView where Self: UIView {
+extension UIView {
+    
+    private struct AssociatedObjectKey {
+        static var isCoverable = "isCoverable"
+    }
     
     /**
-     usefull to discard small iOS stuff
-     for example UIScrollView' scroll indicators are UIImageViews
+     If `true` this view will be covered by a `LoadingPlaceholderView`
+     when `cover(_:, animated:)` is called.
+     
+     The default value is `true` if the object has width and height greather than 10.
      */
-    var isCoverable: Bool {
-        return bounds.width > 10 && bounds.height > 10
+    open var isCoverable: Bool {
+        get {
+            let settedValue = objc_getAssociatedObject(self, &AssociatedObjectKey.isCoverable) as? Bool
+            return settedValue ?? (bounds.width > 10 && bounds.height > 10)
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedObjectKey.isCoverable,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    fileprivate var defaultCoverablePath: UIBezierPath {
+        return UIBezierPath(roundedRect: bounds,
+                            cornerRadius: layer.cornerRadius)
     }
     
 }
@@ -23,8 +43,7 @@ extension CoverableView where Self: UIView {
 extension UIImageView: CoverableView {
     
     var coverablePath: UIBezierPath {
-        return UIBezierPath(roundedRect: bounds,
-                            cornerRadius: layer.cornerRadius)
+        return defaultCoverablePath
     }
 
 }
@@ -32,8 +51,7 @@ extension UIImageView: CoverableView {
 extension UIButton: CoverableView {
     
     var coverablePath: UIBezierPath {
-        return UIBezierPath(roundedRect: bounds,
-                            cornerRadius: layer.cornerRadius)
+        return defaultCoverablePath
     }
     
 }
@@ -68,8 +86,7 @@ extension UITextView: CoverableView {
 extension UISegmentedControl: CoverableView {
     
     var coverablePath: UIBezierPath {
-        return UIBezierPath(roundedRect: bounds,
-                            cornerRadius: 5)
+        return defaultCoverablePath
     }
     
 }
@@ -89,7 +106,7 @@ extension UITableViewCell: CoverableView {
 extension UITableView: CoverableView {
     
     private struct AssociatedObjectKey {
-        static var coverableCellsIdentifiers: String = "coverableCellsIdentifiers"
+        static var coverableCellsIdentifiers = "coverableCellsIdentifiers"
     }
     
     open var coverableCellsIdentifiers: [String]? {
