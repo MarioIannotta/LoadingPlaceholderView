@@ -24,7 +24,7 @@ extension UIView {
     open var isCoverable: Bool {
         get {
             let settedValue = objc_getAssociatedObject(self, &AssociatedObjectKey.isCoverable) as? Bool
-            return settedValue ?? (bounds.width > 10 && bounds.height > 10)
+            return settedValue ?? isBigEnough
         }
         set {
             objc_setAssociatedObject(self,
@@ -36,7 +36,8 @@ extension UIView {
     
     open var coverablePath: UIBezierPath? {
         get {
-            let settedCoverablePath = objc_getAssociatedObject(self, &AssociatedObjectKey.coverablePath) as? UIBezierPath
+            let settedCoverablePath = objc_getAssociatedObject(self,
+                                                               &AssociatedObjectKey.coverablePath) as? UIBezierPath
             return settedCoverablePath ?? (self as? Coverable)?.defaultCoverablePath
         }
         set {
@@ -45,6 +46,10 @@ extension UIView {
                                      newValue,
                                      .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
+    }
+    
+    private var isBigEnough: Bool {
+        return bounds.width > 10 && bounds.height > 10
     }
     
     fileprivate var subviewsCoverablePath: UIBezierPath {
@@ -98,7 +103,7 @@ extension UITableView: Coverable {
     open var coverableCellsIdentifiers: [String]? {
         get {
             return objc_getAssociatedObject(self,
-                                              &AssociatedObjectKey.coverableCellsIdentifiers) as? [String]
+                                            &AssociatedObjectKey.coverableCellsIdentifiers) as? [String]
         }
         set {
             objc_setAssociatedObject(self,

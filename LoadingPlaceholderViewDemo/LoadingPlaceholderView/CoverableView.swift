@@ -16,9 +16,7 @@ protocol Coverable {
 
 extension Coverable {
     
-    var defaultCoverablePath: UIBezierPath? {
-        return nil
-    }
+    var defaultCoverablePath: UIBezierPath? { return nil }
     
 }
 
@@ -38,7 +36,9 @@ extension Coverable where Self: UIView {
     }
     
     func addCoverablePath(to totalCoverablePath: UIBezierPath, superview: UIView? = nil) {
-        guard let coverablePath = makeCoverablePath(superview: superview) else { return }
+        guard
+            let coverablePath = makeCoverablePath(superview: superview)
+            else { return }
         totalCoverablePath.append(coverablePath)
     }
     
