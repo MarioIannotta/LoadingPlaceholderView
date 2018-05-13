@@ -12,6 +12,7 @@ extension UIView {
     
     private struct AssociatedObjectKey {
         static var isCoverable = "isCoverable"
+        static var coverablePath = "coverablePath"
     }
     
     /**
@@ -33,67 +34,20 @@ extension UIView {
         }
     }
     
-    fileprivate var defaultCoverablePath: UIBezierPath {
-        return UIBezierPath(roundedRect: bounds,
-                            cornerRadius: layer.cornerRadius)
+    open var coverablePath: UIBezierPath? {
+        get {
+            let settedCoverablePath = objc_getAssociatedObject(self, &AssociatedObjectKey.coverablePath) as? UIBezierPath
+            return settedCoverablePath ?? (self as? Coverable)?.defaultCoverablePath
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedObjectKey.coverablePath,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
     
-}
-
-extension UIImageView: CoverableView {
-    
-    var coverablePath: UIBezierPath {
-        return defaultCoverablePath
-    }
-
-}
-
-extension UIButton: CoverableView {
-    
-    var coverablePath: UIBezierPath {
-        return defaultCoverablePath
-    }
-    
-}
-
-extension UILabel: CoverableView {
-    
-    private var numberOfVisibleLines: Int {
-        guard let font = self.font else { return 1 }
-        return max(1, Int(bounds.height/font.lineHeight))
-    }
-    
-    var coverablePath: UIBezierPath {
-        return .multiLinePath(numberOfLines: numberOfVisibleLines, bounds: bounds)
-    }
-    
-}
-
-
-extension UITextView: CoverableView {
-    
-    private var numberOfVisibleLines: Int {
-        guard let font = self.font else { return 1 }
-        return max(1, Int(bounds.height/font.lineHeight))
-    }
-    
-    var coverablePath: UIBezierPath {
-        return .multiLinePath(numberOfLines: numberOfVisibleLines, bounds: bounds)
-    }
-    
-}
-
-extension UISegmentedControl: CoverableView {
-    
-    var coverablePath: UIBezierPath {
-        return defaultCoverablePath
-    }
-    
-}
-
-extension UITableViewCell: CoverableView {
-    
-    var coverablePath: UIBezierPath {
+    fileprivate var subviewsCoverablePath: UIBezierPath {
         return coverableSubviews()
             .reduce(UIBezierPath(), { totalBezierPath, coverableView in
                 coverableView.addCoverablePath(to: totalBezierPath, superview: self)
@@ -103,7 +57,39 @@ extension UITableViewCell: CoverableView {
     
 }
 
-extension UITableView: CoverableView {
+extension UIImageView: Coverable { }
+extension UIButton: Coverable { }
+extension UISegmentedControl: Coverable { }
+
+extension UILabel: Coverable {
+
+    private var numberOfVisibleLines: Int {
+        guard let font = self.font else { return 1 }
+        return max(1, Int(bounds.height/font.lineHeight))
+    }
+
+    var defaultCoverablePath: UIBezierPath? {
+        return .multiLinePath(numberOfLines: numberOfVisibleLines,
+                              bounds: bounds)
+    }
+
+}
+
+extension UITextView: Coverable {
+
+    private var numberOfVisibleLines: Int {
+        guard let font = self.font else { return 1 }
+        return max(1, Int(bounds.height/font.lineHeight))
+    }
+
+    var defaultCoverablePath: UIBezierPath? {
+        return .multiLinePath(numberOfLines: numberOfVisibleLines,
+                              bounds: bounds)
+    }
+
+}
+
+extension UITableView: Coverable {
     
     private struct AssociatedObjectKey {
         static var coverableCellsIdentifiers = "coverableCellsIdentifiers"
@@ -122,7 +108,7 @@ extension UITableView: CoverableView {
         }
     }
     
-    var coverablePath: UIBezierPath {
+    var defaultCoverablePath: UIBezierPath? {
         guard
             let coverableCellsIdentifiers = coverableCellsIdentifiers
             else { return makeCoverablePathFromVisibleCells() }
@@ -151,35 +137,26 @@ extension UITableView: CoverableView {
     
 }
 
-extension Array where Element: CoverableView {
+extension UITableViewCell: Coverable {
     
-    var coverablePath: UIBezierPath {
-        return reduce(UIBezierPath(), { totalPath, cell in
-            guard
-                let cellPath = cell.makeCoverablePath()
-                else { return totalPath }
-            totalPath.append(cellPath)
-            return totalPath
-        })
+    var defaultCoverablePath: UIBezierPath? {
+        return subviewsCoverablePath
     }
     
 }
 
-extension UICollectionView: CoverableView {
+extension UICollectionView: Coverable {
     
-    var coverablePath: UIBezierPath {
+    var defaultCoverablePath: UIBezierPath? {
         return visibleCells.coverablePath
     }
+    
 }
 
-extension UICollectionViewCell: CoverableView {
+extension UICollectionViewCell: Coverable {
     
-    var coverablePath: UIBezierPath {
-        return coverableSubviews()
-            .reduce(UIBezierPath(), { totalBezierPath, coverableView in
-                coverableView.addCoverablePath(to: totalBezierPath, superview: self)
-                return totalBezierPath
-            })
+    var defaultCoverablePath: UIBezierPath? {
+        return subviewsCoverablePath
     }
     
 }

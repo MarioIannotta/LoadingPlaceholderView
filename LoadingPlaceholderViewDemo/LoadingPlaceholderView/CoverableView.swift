@@ -8,22 +8,31 @@
 
 import UIKit
 
-@objc protocol CoverableView {
+protocol Coverable {
     
-    var coverablePath: UIBezierPath { get }
+    var defaultCoverablePath: UIBezierPath? { get }
     
 }
 
-extension CoverableView {
+extension Coverable {
+    
+    var defaultCoverablePath: UIBezierPath? {
+        return nil
+    }
+    
+}
+
+typealias CoverableView = UIView & Coverable
+
+extension Coverable where Self: UIView {
     
     func makeCoverablePath(superview: UIView? = nil) -> UIBezierPath? {
         guard
-            let view = self as? UIView,
-            let superview = superview ?? view.superview
+            let superview = superview ?? self.superview
             else { return nil }
-        view.layoutIfNeeded()
-        let offsetPoint = view.convert(view.bounds, to: superview).origin
-        let relativePath = coverablePath
+        layoutIfNeeded()
+        let offsetPoint = convert(bounds, to: superview).origin
+        let relativePath = coverablePath ?? UIBezierPath()
         relativePath.translate(to: offsetPoint)
         return relativePath
     }
@@ -31,6 +40,22 @@ extension CoverableView {
     func addCoverablePath(to totalCoverablePath: UIBezierPath, superview: UIView? = nil) {
         guard let coverablePath = makeCoverablePath(superview: superview) else { return }
         totalCoverablePath.append(coverablePath)
+    }
+    
+    var defaultCoverablePath: UIBezierPath? {
+        return UIBezierPath(roundedRect: bounds,
+                            cornerRadius: layer.cornerRadius)
+    }
+    
+}
+
+extension Array where Element: CoverableView {
+    
+    var coverablePath: UIBezierPath {
+        return reduce(UIBezierPath(), { totalPath, cell in
+            cell.addCoverablePath(to: totalPath)
+            return totalPath
+        })
     }
     
 }
