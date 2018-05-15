@@ -1,5 +1,5 @@
 //
-//  CoverableView+UIKit.swift
+//  Coverable+UIKit.swift
 //  LoadingPlaceholderViewDemo
 //
 //  Created by Mario on 04/05/2018.
@@ -19,8 +19,9 @@ extension UIView {
      If `true` this view will be covered by a `LoadingPlaceholderView`
      when `cover(_:, animated:)` is called.
      
-     The default value is `true` if the object has width and height greather than 10.
+     The default value is `true` if the object has width and height greather than 5.
      */
+    @IBInspectable
     open var isCoverable: Bool {
         get {
             let settedValue = objc_getAssociatedObject(self, &AssociatedObjectKey.isCoverable) as? Bool
@@ -34,6 +35,10 @@ extension UIView {
         }
     }
     
+    /**
+     The path that will be used to mask the content and add the gradient.
+     If this value is provided `Coverable.defaultCoverablePath` is ignored.
+    */
     open var coverablePath: UIBezierPath? {
         get {
             let settedCoverablePath = objc_getAssociatedObject(self,
@@ -49,7 +54,7 @@ extension UIView {
     }
     
     private var isBigEnough: Bool {
-        return bounds.width > 10 && bounds.height > 10
+        return bounds.width > 5 && bounds.height > 5
     }
     
     fileprivate var subviewsCoverablePath: UIBezierPath {
@@ -64,34 +69,107 @@ extension UIView {
 
 extension UIImageView: Coverable { }
 extension UIButton: Coverable { }
-extension UISegmentedControl: Coverable { }
+extension UITextField: Coverable { }
 
 extension UILabel: Coverable {
+    
+    private struct AssociatedObjectKey {
+        static var linesSpacing = "linesSpacing"
+    }
+    
+    /**
+     The spacing between the lines.
+     The default value is 3.
+     */
+    @IBInspectable
+    open var linesSpacing: CGFloat {
+        get {
+            let settedValue = objc_getAssociatedObject(self, &AssociatedObjectKey.linesSpacing) as? CGFloat
+            return settedValue ?? 3
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedObjectKey.linesSpacing,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
     private var numberOfVisibleLines: Int {
         guard let font = self.font else { return 1 }
         return max(1, Int(bounds.height/font.lineHeight))
     }
 
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         return .multiLinePath(numberOfLines: numberOfVisibleLines,
+                              spacing: linesSpacing,
                               bounds: bounds)
     }
 
 }
 
 extension UITextView: Coverable {
+    
+    private struct AssociatedObjectKey {
+        static var linesSpacing = "linesSpacing"
+    }
+    
+    /**
+     The spacing between the lines.
+     The default value is 3.
+     */
+    @IBInspectable
+    open var linesSpacing: CGFloat {
+        get {
+            let settedValue = objc_getAssociatedObject(self, &AssociatedObjectKey.linesSpacing) as? CGFloat
+            return settedValue ?? 3
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedObjectKey.linesSpacing,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
     private var numberOfVisibleLines: Int {
         guard let font = self.font else { return 1 }
         return max(1, Int(bounds.height/font.lineHeight))
     }
 
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         return .multiLinePath(numberOfLines: numberOfVisibleLines,
+                              spacing: linesSpacing,
                               bounds: bounds)
     }
 
+}
+
+extension UISwitch: Coverable {
+    
+    public var defaultCoverablePath: UIBezierPath? {
+        return UIBezierPath(roundedRect: bounds,
+                            cornerRadius: bounds.height/2)
+    }
+    
+}
+
+extension UISegmentedControl: Coverable {
+    
+    public var defaultCoverablePath: UIBezierPath? {
+        return UIBezierPath(roundedRect: bounds,
+                            cornerRadius: 4)
+    }
+    
+}
+
+extension UIStepper: Coverable {
+    
+    public var defaultCoverablePath: UIBezierPath? {
+        return UIBezierPath(roundedRect: bounds,
+                            cornerRadius: 4)
+    }
+    
 }
 
 extension UITableView: Coverable {
@@ -113,7 +191,7 @@ extension UITableView: Coverable {
         }
     }
     
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         guard
             let coverableCellsIdentifiers = coverableCellsIdentifiers
             else { return makeCoverablePathFromVisibleCells() }
@@ -144,7 +222,7 @@ extension UITableView: Coverable {
 
 extension UITableViewCell: Coverable {
     
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         return subviewsCoverablePath
     }
     
@@ -152,15 +230,17 @@ extension UITableViewCell: Coverable {
 
 extension UICollectionView: Coverable {
     
-    var defaultCoverablePath: UIBezierPath? {
-        return visibleCells.coverablePath
+    public var defaultCoverablePath: UIBezierPath? {
+        let coverablePath = visibleCells.coverablePath
+        coverablePath.translate(to: contentOffset.applying(CGAffineTransform(scaleX: 0, y: -1)))
+        return coverablePath
     }
     
 }
 
 extension UICollectionViewCell: Coverable {
     
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         return subviewsCoverablePath
     }
     

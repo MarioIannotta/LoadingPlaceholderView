@@ -16,12 +16,15 @@ class MixedComponentsExampleViewController: UIViewController {
         }
     }
     
-    private var loadingPlaceholderView = LoadingPlaceholderView()
+    private let loadingPlaceholderView = LoadingPlaceholderView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLoadingPlaceholderView()
         loadingPlaceholderView.cover(view, animated: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            self.hideLoaderButtonTapped()
+        }
     }
     
     private func setupLoadingPlaceholderView() {

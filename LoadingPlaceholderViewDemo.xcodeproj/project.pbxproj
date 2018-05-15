@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AC1F9494209C6F1C00F04A1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1F9493209C6F1C00F04A1C /* LaunchScreen.storyboard */; };
 		AC1F9496209C706300F04A1C /* TableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9495209C706300F04A1C /* TableViewExampleViewController.swift */; };
-		AC1F9498209C907000F04A1C /* CoverableView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */; };
+		AC1F9498209C907000F04A1C /* Coverable+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9497209C907000F04A1C /* Coverable+UIKit.swift */; };
 		AC1F949A209C909B00F04A1C /* UIBezierPath+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */; };
 		AC6738CF20A4A31E00458DE5 /* CollectionViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6738CE20A4A31E00458DE5 /* CollectionViewExampleViewController.swift */; };
 		AC9A00332094F32A003E6375 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00322094F32A003E6375 /* AppDelegate.swift */; };
@@ -17,14 +17,13 @@
 		AC9A00382094F32A003E6375 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC9A00362094F32A003E6375 /* Main.storyboard */; };
 		AC9A003A2094F32B003E6375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC9A00392094F32B003E6375 /* Assets.xcassets */; };
 		AC9A00482094F34D003E6375 /* LoadingPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */; };
-		AC9A00492094F34D003E6375 /* CoverableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00462094F34D003E6375 /* CoverableView.swift */; };
-		ACAC80AB209CBF2D0042ADAB /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAC80AA209CBF2D0042ADAB /* UIView+.swift */; };
+		AC9A00492094F34D003E6375 /* Coverable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A00462094F34D003E6375 /* Coverable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AC1F9493209C6F1C00F04A1C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC1F9495209C706300F04A1C /* TableViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExampleViewController.swift; sourceTree = "<group>"; };
-		AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoverableView+UIKit.swift"; sourceTree = "<group>"; };
+		AC1F9497209C907000F04A1C /* Coverable+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coverable+UIKit.swift"; sourceTree = "<group>"; };
 		AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+.swift"; sourceTree = "<group>"; };
 		AC6738CE20A4A31E00458DE5 /* CollectionViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewExampleViewController.swift; sourceTree = "<group>"; };
 		AC9A002F2094F32A003E6375 /* LoadingPlaceholderViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoadingPlaceholderViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,8 +33,7 @@
 		AC9A00392094F32B003E6375 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC9A003E2094F32B003E6375 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingPlaceholderView.swift; sourceTree = "<group>"; };
-		AC9A00462094F34D003E6375 /* CoverableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverableView.swift; sourceTree = "<group>"; };
-		ACAC80AA209CBF2D0042ADAB /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		AC9A00462094F34D003E6375 /* Coverable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coverable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,11 +98,10 @@
 		AC9A00442094F34D003E6375 /* LoadingPlaceholderView */ = {
 			isa = PBXGroup;
 			children = (
-				AC9A00462094F34D003E6375 /* CoverableView.swift */,
-				AC1F9497209C907000F04A1C /* CoverableView+UIKit.swift */,
+				AC9A00462094F34D003E6375 /* Coverable.swift */,
+				AC1F9497209C907000F04A1C /* Coverable+UIKit.swift */,
 				AC9A00452094F34D003E6375 /* LoadingPlaceholderView.swift */,
 				AC1F9499209C909B00F04A1C /* UIBezierPath+.swift */,
-				ACAC80AA209CBF2D0042ADAB /* UIView+.swift */,
 			);
 			path = LoadingPlaceholderView;
 			sourceTree = "<group>";
@@ -180,13 +177,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC9A00492094F34D003E6375 /* CoverableView.swift in Sources */,
+				AC9A00492094F34D003E6375 /* Coverable.swift in Sources */,
 				AC9A00352094F32A003E6375 /* MixedComponentsExampleViewController.swift in Sources */,
 				AC9A00332094F32A003E6375 /* AppDelegate.swift in Sources */,
-				AC1F9498209C907000F04A1C /* CoverableView+UIKit.swift in Sources */,
+				AC1F9498209C907000F04A1C /* Coverable+UIKit.swift in Sources */,
 				AC1F9496209C706300F04A1C /* TableViewExampleViewController.swift in Sources */,
 				AC1F949A209C909B00F04A1C /* UIBezierPath+.swift in Sources */,
-				ACAC80AB209CBF2D0042ADAB /* UIView+.swift in Sources */,
 				AC9A00482094F34D003E6375 /* LoadingPlaceholderView.swift in Sources */,
 				AC6738CF20A4A31E00458DE5 /* CollectionViewExampleViewController.swift in Sources */,
 			);
@@ -257,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -311,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

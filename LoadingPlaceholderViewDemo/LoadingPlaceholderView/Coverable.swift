@@ -1,5 +1,5 @@
 //
-//  CoverableView.swift
+//  Coverable.swift
 //  LoadingPlaceholderViewDemo
 //
 //  Created by Mario on 28/04/2018.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol Coverable {
+public protocol Coverable {
     
+    /**
+     The path that will be used to mask the content and add the gradient.
+     The default value for all the `UIViews` is a rounded rect of the size of the view's bounds.
+     
+     It's possible to customize the default path by explicitly set `UIView.coverablePath`
+     */
     var defaultCoverablePath: UIBezierPath? { get }
-    
-}
-
-extension Coverable {
-    
-    var defaultCoverablePath: UIBezierPath? { return nil }
     
 }
 
@@ -42,7 +42,7 @@ extension Coverable where Self: UIView {
         totalCoverablePath.append(coverablePath)
     }
     
-    var defaultCoverablePath: UIBezierPath? {
+    public var defaultCoverablePath: UIBezierPath? {
         return UIBezierPath(roundedRect: bounds,
                             cornerRadius: layer.cornerRadius)
     }
@@ -56,6 +56,23 @@ extension Array where Element: CoverableView {
             cell.addCoverablePath(to: totalPath)
             return totalPath
         })
+    }
+    
+}
+
+
+extension UIView {
+    
+    func coverableSubviews() -> [CoverableView] {
+        var foundedViews = [CoverableView]()
+        subviews.forEach { view in
+            if let coverableView = view as? CoverableView & UIView, coverableView.isCoverable {
+                foundedViews.append(coverableView)
+            } else {
+                foundedViews += view.coverableSubviews()
+            }
+        }
+        return foundedViews
     }
     
 }

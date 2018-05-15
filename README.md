@@ -5,15 +5,57 @@ Animated gradient placeholder with zero effort
 )](https://developer.apple.com/iphone/index.action)
 [![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/) 
 
-<img src="demo.gif" height="500"/>
+| Mixed UI Components | Table View | Collection View |
+|--|--|--|
+|<img src="ReadmeResources/mixedComponents.gif" height="300"/>|<img src="ReadmeResources/tableView.gif" height="300"/>|<img src="ReadmeResources/collectionView.gif" height="300"/>|
 
 # Features
-- Plug and play component
-- UIKit ready
-- Custom component ready
+- Plug and play
+- Supports all UIKit components and it's open to user-defined ones. 
+- Supports landscape mode and runtime screen resize
+- Highly customizable
+- Swift 4 and iOS 9.0+
+
+# How it works
+`LoadingPlaceholderView` extracts all the subviews that conforms the protocol `Coverable` from `viewToCover` and then creates an animated gradient layer combining all the `coverablePath` provided by each of those subviews.
 
 # Setup
 TODO
+
+# How to use
+1. Create an instance of `LoadingPlaceholderView`
+
+    `let loadingPlaceholderView = LoadingPlaceholderView()`
+    
+    Usually this would be a property of your view controller.
+    
+2. Show the view with
+
+    `loadingPlaceholderView.cover(_ viewToCover: UIView, animated: Bool)`
+    
+3. Hide the view with
+
+    `loadingPlaceholderView.uncover(animated: Bool)`
+    
+# UITableView/UICollectionView
+
+By design `LoadingPlaceholderView` doesn't interfere with `DataSource` and/or`Delegate` by injecting mocked data but it leaves the resposability to decide what to show and how to the user; in that way unwanted side effects are limited.
+ 
+1. Preload the tableView/collectionView with "mocked" cells.
+    `UITableViewCell` and `UICollectionViewCell` already conforms `Coverable`
+
+2. Show the view with
+    
+    `loadingPlaceholderView.cover(_ viewToCover: UIView, animated: Bool)` 
+    
+3. Hide the view and refresh the tableView/collectionView
+    
+    `loadingPlaceholderView.uncover(animated: Bool)`
+    `tableView/collectionView.reloadData()`
+
+**Note:**
+
+It is possible to set `coverableCellsIdentifiers` (just for `UITableView`) - in this way the current tableView state will be ignored and the `coverablePath` (and therefore the gradient) is generated using the provided cells identifies. In this way it is possible to skip the first step of the previous list because populating the tableView with mocked cells is no more required.
  
 # Customization
 You can customize the component behavior by setting the followings properties:

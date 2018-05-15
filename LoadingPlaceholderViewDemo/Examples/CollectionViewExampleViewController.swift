@@ -19,6 +19,7 @@ class CollectionViewExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLoadingPlaceholderView()
+        performFakeNetworkRequest()
     }
     
     private func performFakeNetworkRequest() {

@@ -11,7 +11,7 @@ import UIKit
 extension UIBezierPath {
     
     static func multiLinePath(numberOfLines: Int,
-                              spacing: CGFloat = 3,
+                              spacing: CGFloat,
                               bounds: CGRect) -> UIBezierPath {
         let numberOfLinesFloat = CGFloat(numberOfLines)
         let height = bounds.height
