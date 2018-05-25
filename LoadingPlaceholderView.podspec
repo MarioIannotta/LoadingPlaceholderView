@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'LoadingPlaceholderView'
   s.version          = '0.0.1'
-  s.summary          = 'Animated gradient placeholder with zero effort.'
+  s.summary          = 'Non-blocking animated gradient placeholder view for your async tasks.'
   s.description      = <<-DESC
 LoadingPlaceholderView allows you to display an animated gradient placeholder for all of your view' subviews with just a couple of line of codes.
                        DESC

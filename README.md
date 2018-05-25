@@ -3,11 +3,12 @@ Animated gradient placeholder with zero effort
 
 [![Platform](http://img.shields.io/badge/platform-ios-red.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
-[![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/) 
+[![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/LoadingPlaceholderView.svg)](https://img.shields.io/cocoapods/v/LoadingPlaceholderView.svg)
 
 | Mixed UI Components | Table View | Collection View |
 |--|--|--|
-|<img src="ReadmeResources/mixedComponents.gif" height="300"/>|<img src="ReadmeResources/tableView.gif" height="300"/>|<img src="ReadmeResources/collectionView.gif" height="300"/>|
+|<img src="https://raw.githubusercontent.com/MarioIannotta/LoadingPlaceholderView/master/ReadmeResources/mixedComponents.gif" height="300"/>|<img src="https://github.com/MarioIannotta/LoadingPlaceholderView/raw/master/ReadmeResources/tableView.gif" height="300"/>|<img src="https://raw.githubusercontent.com/MarioIannotta/LoadingPlaceholderView/master/ReadmeResources/collectionView.gif" height="300"/>|
 
 # Features
 - Plug and play
@@ -20,7 +21,7 @@ Animated gradient placeholder with zero effort
 `LoadingPlaceholderView` extracts all the subviews that conforms the protocol `Coverable` from `viewToCover` and then creates an animated gradient layer combining all the `coverablePath` provided by each of those subviews.
 
 # Setup
-TODO
+Add `pod 'LoadingPlaceholderView'` to your Podfile or copy the content of  the `LoadingPlaceholderView` folder into your project
 
 # How to use
 1. Create an instance of `LoadingPlaceholderView`
@@ -84,9 +85,6 @@ You can customize the component behavior by setting the followings properties:
 
 `gradientiConfiguration.secondaryColor: UIColor`
 >The secondaryColor of the gradient.
-
-# Usage
-TODO
 
 # Demo
 In this repository you can also find a demo.
