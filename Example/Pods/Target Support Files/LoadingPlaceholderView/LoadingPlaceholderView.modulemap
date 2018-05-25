@@ -1,0 +1,6 @@
+framework module LoadingPlaceholderView {
+  umbrella header "LoadingPlaceholderView-umbrella.h"
+
+  export *
+  module * { export * }
+}

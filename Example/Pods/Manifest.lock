@@ -1,0 +1,16 @@
+PODS:
+  - LoadingPlaceholderView (0.0.1)
+
+DEPENDENCIES:
+  - LoadingPlaceholderView (from `../`)
+
+EXTERNAL SOURCES:
+  LoadingPlaceholderView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  LoadingPlaceholderView: eade705186440311f570611b33e31c4143dc9fed
+
+PODFILE CHECKSUM: 1c6d96c7a6da197eff78442178418046ee0f65fa
+
+COCOAPODS: 1.5.0
