@@ -5,6 +5,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 LoadingPlaceholderView allows you to display an animated gradient placeholder for all of your view' subviews with just a couple of line of codes.
                        DESC
+  s.swift_version = '4.0'
   s.homepage         = 'https://github.com/MarioIannotta/LoadingPlaceholderView'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'MarioIannotta' => 'info@marioiannotta.com' }
