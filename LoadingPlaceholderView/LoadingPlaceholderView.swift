@@ -118,10 +118,6 @@ open class LoadingPlaceholderView: UIView {
     }
     
     deinit {
-		if let observer = viewToConverObservation {
-			observer.invalidate()
-			removeObserver(observer, forKeyPath: "bounds")
-		}
         viewToConverObservation = nil
     }
     
