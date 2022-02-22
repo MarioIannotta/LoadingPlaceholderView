@@ -21,7 +21,20 @@ Animated gradient placeholder with zero effort
 `LoadingPlaceholderView` extracts all the subviews that conforms the protocol `Coverable` from `viewToCover` and then creates an animated gradient layer combining all the `coverablePath` provided by each of those subviews.
 
 # Setup
-Add `pod 'LoadingPlaceholderView'` to your Podfile or copy the content of  the `LoadingPlaceholderView` folder into your project
+
+## CocoaPods
+Add to your Podfile:
+
+`pod 'LoadingPlaceholderView'`
+
+## Carthage
+Add to your Cartfile:
+
+`github "MarioIannotta/LoadingPlaceholderView" "master"`
+
+## Manually
+
+Copy the content of the `LoadingPlaceholderView` folder into your project
 
 # How to use
 1. Create an instance of `LoadingPlaceholderView`
